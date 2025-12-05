@@ -21,13 +21,13 @@ pipeline {
 
         stage('Setup Firebase') {
             steps {
-                bat 'copy $FIREBASE_ADMIN_JSON task-tracker-162e0-firebase-adminsdk-fbsvc-d509e6d5f9.json'
+                bat 'copy %FIREBASE_ADMIN_JSON% task-tracker-162e0-firebase-adminsdk-fbsvc-d509e6d5f9.json'
             }
         }
 
         stage('Deploy to Firebase') {
             steps {
-                bat 'firebase deploy --only hosting --token $FIREBASE_TOKEN'
+                bat 'firebase deploy --only hosting --token %FIREBASE_TOKEN%'
             }
         }
     }
