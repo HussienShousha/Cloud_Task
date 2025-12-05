@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        FIREBASE_TOKEN = credentials('FIREBASE_CI_TOKEN')
-        FIREBASE_ADMIN_JSON = credentials('FIREBASE_ADMIN_JSON')
+        FIREBASE_TOKEN = credentials('FIREBASE_TOKEN')
     }
 
     stages {
@@ -14,34 +13,39 @@ pipeline {
         }
 
         stage('Install Dependencies') {
+
             steps {
-                bat 'npm install'
+                sh '''
+                    sudo apt-get update -y
+                    sudo apt-get install -y nodejs npm
+                    sudo npm install -g firebase-tools
+                '''
+            }
+        }
+ 	  stage('Build Project') {
+            steps {
+                sh '''
+                    npm install
+                    npm run build || echo "No build step available"
+                '''
             }
         }
 
-        stage('Setup Firebase') {
-            steps {
       
-                bat 'npm install -g firebase-tools'
 
-       
-                bat '''  setx PATH "%APPDATA%\\npm;%PATH%" '''
 
-       
-                bat 'copy "%FIREBASE_ADMIN_JSON%" "firebase-admin.json"'
-    }
-}
-
-        stage('Deploy to Firebase') {
+         stage('Deploy to Firebase') {
             steps {
-                bat 'firebase deploy --only hosting --token %FIREBASE_TOKEN%'
+                sh '''
+                    firebase deploy --token "$FIREBASE_TOKEN"
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Deployment succeeded!'
+             echo "Firebase deploy completed successfully!
         }
         failure {
             echo 'Deployment failed!'
