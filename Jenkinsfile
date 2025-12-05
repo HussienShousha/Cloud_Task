@@ -15,19 +15,19 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Setup Firebase') {
             steps {
-                sh 'cp $FIREBASE_ADMIN_JSON task-tracker-162e0-firebase-adminsdk-fbsvc-d509e6d5f9.json'
+                bat 'cp $FIREBASE_ADMIN_JSON task-tracker-162e0-firebase-adminsdk-fbsvc-d509e6d5f9.json'
             }
         }
 
         stage('Deploy to Firebase') {
             steps {
-                sh 'firebase deploy --only hosting --token $FIREBASE_TOKEN'
+                bat 'firebase deploy --only hosting --token $FIREBASE_TOKEN'
             }
         }
     }
