@@ -21,9 +21,16 @@ pipeline {
 
         stage('Setup Firebase') {
             steps {
-                bat 'copy %FIREBASE_ADMIN_JSON% task-tracker-162e0-firebase-adminsdk-fbsvc-d509e6d5f9.json'
-            }
-        }
+      
+                bat 'npm install -g firebase-tools'
+
+       
+                bat '''  setx PATH "%APPDATA%\\npm;%PATH%" '''
+
+       
+                bat 'copy "%FIREBASE_ADMIN_JSON%" "firebase-admin.json"'
+    }
+}
 
         stage('Deploy to Firebase') {
             steps {
