@@ -45,7 +45,7 @@ pipeline {
 
     post {
         success {
-             echo "Firebase deploy completed successfully!
+             echo "Firebase deploy completed successfully!"
         }
         failure {
             echo 'Deployment failed!'
