@@ -1,3 +1,9 @@
+body {
+    font-family: Arial;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
 input, button, select {
     padding: 6px;
     font-size: 16px;
@@ -9,18 +15,12 @@ ul {
 }
 
 li {
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ddd;
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 8px; /* rounded corners */
-    transition: background-color 0.3s; /* smooth hover */
-}
-
-li:hover {
-    background-color: #e6f7ff; /* highlight on hover */
 }
 
 .task-info {
@@ -32,9 +32,7 @@ button.delete {
     color: white;
     border: none;
     cursor: pointer;
-    padding: 6px 12px; /* slightly bigger */
-    border-radius: 4px; /* rounded button */
-    transition: background-color 0.3s;
+    padding: 4px 8px;
 }
 
 button.delete:hover {
