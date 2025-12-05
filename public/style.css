@@ -1,0 +1,40 @@
+body {
+    font-family: Arial;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+input, button, select {
+    padding: 6px;
+    font-size: 16px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-info {
+    flex: 1;
+}
+
+button.delete {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+button.delete:hover {
+    background-color: #c9302c;
+}

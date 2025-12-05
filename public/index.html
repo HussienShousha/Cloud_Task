@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<h1>Task Tracker</h1>
+
+<!-- Add new task -->
+<form id="taskForm">
+    <input type="text" id="taskName" placeholder="Enter task" required>
+    <button type="submit">Add Task</button>
+</form>
+
+<!-- Filter -->
+<label for="filterSelect">Filter by status:</label>
+<select id="filterSelect">
+    <option value="all">All</option>
+    <option value="open">Open</option>
+    <option value="closed">Closed</option>
+</select>
+
+<!-- Task list -->
+<ul id="taskList"></ul>
+
+<script>
+const taskForm = document.getElementById('taskForm');
+const taskNameInput = document.getElementById('taskName');
+const taskList = document.getElementById('taskList');
+const filterSelect = document.getElementById('filterSelect');
+
+let tasks = [];
+
+// Load tasks from server
+async function loadTasks() {
+    const res = await fetch('/api/tasks');
+    tasks = await res.json();
+    renderTasks();
+}
+
+
+function renderTasks() {
+    const filter = filterSelect.value;
+    taskList.innerHTML = '';
+
+    tasks
+        .filter(task => filter === 'all' || task.status === filter)
+        .forEach(task => {
+            const li = document.createElement('li');
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'task-info';
+            infoDiv.textContent = `${task.name} (${task.status})`;
+
+          
+            const select = document.createElement('select');
+            ['open','closed'].forEach(s => {
+                const option = document.createElement('option');
+                option.value = s;
+                option.textContent = s.charAt(0).toUpperCase() + s.slice(1);
+                if (task.status === s) option.selected = true;
+                select.appendChild(option);
+            });
+            select.addEventListener('change', async () => {
+                await fetch(`/api/tasks/${task.id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newStatus: select.value })
+                });
+                loadTasks();
+            });
+
+            
+            const delBtn = document.createElement('button');
+            delBtn.textContent = 'Delete';
+            delBtn.className = 'delete';
+            delBtn.addEventListener('click', async () => {
+                await fetch(`/api/tasks/${task.id}`, { method: 'DELETE' });
+                loadTasks();
+            });
+
+            li.appendChild(infoDiv);
+            li.appendChild(select);
+            li.appendChild(delBtn);
+            taskList.appendChild(li);
+        });
+}
+
+
+taskForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = taskNameInput.value.trim();
+    if (!name) return;
+
+    await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskName: name })
+    });
+
+    taskNameInput.value = '';
+    loadTasks();
+});
+
+filterSelect.addEventListener('change', renderTasks);
+
+
+loadTasks();
+</script>
+
+</body>
+</html>

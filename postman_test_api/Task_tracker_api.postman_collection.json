@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "4066acbc-52e7-451e-9bb7-9d6288747bf3",
+		"name": "Task_tracker_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40398644"
+	},
+	"item": [
+		{
+			"name": "get All tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/api/tasks"
+			},
+			"response": []
+		},
+		{
+			"name": "add new task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"taskName\": \"midterm\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/tasks"
+			},
+			"response": []
+		},
+		{
+			"name": "update task status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"newStatus\": \"closed\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/tasks/-OdZAOZnj0zm_sgwi41g"
+			},
+			"response": []
+		},
+		{
+			"name": "delete specific task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"newStatus\": \"closed\"\r\n   \r\n}"
+				},
+				"url": "http://localhost:3000/api/tasks/-OdZAOZnj0zm_sgwi41g"
+			},
+			"response": []
+		}
+	]
+}
