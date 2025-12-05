@@ -12,16 +12,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-
-            steps {
-                sh '''
-                    sudo apt-get update -y
-                    sudo apt-get install -y nodejs npm
-                    sudo npm install -g firebase-tools
-                '''
-            }
-        }
+        
  	  stage('Build Project') {
             steps {
                 sh '''
